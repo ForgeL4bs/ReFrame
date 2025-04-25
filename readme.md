@@ -71,4 +71,6 @@ python extract_frames.py <video_path> <output_dir> [-f <format>] [-fps <frames_p
 
 ## Examples
 * Extract all frames from `test.mp4` to the `output_frames` directory as PNGs:
-```bash python extract_frames.py my_video.mp4 output_frames ```
+```bash
+python extract_frames.py my_video.mp4 output_frames
+```
