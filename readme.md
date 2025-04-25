@@ -58,8 +58,10 @@ A Python-based command-line tool to extract frames from video files (MP4, MKV, e
     ```
 
 ## Arguments
-* `video_path`: The path to the video file you want to extract frames from. (**Required**)
-* `output_dir`: The directory where you want to save the extracted frames.  This directory will be created if it doesn't exist. (**Required**)
+* `video_path` (**Required**): The path to the video file you want to extract frames from.
+* `output_dir` (**Required**): The directory where you want to save the extracted frames.  This directory will be created if it doesn't exist. 
+* `-f, --format` (Optional): The format of the output frames. Can be either png or jpg. Default is png. 
+* `-fps, --fps` (Optional): The number of frames per second to extract. If not specified, all frames will be extracted. (*** Note: this is calculated based on the FPS of you input video. ***)
 
 ## Usage
 
