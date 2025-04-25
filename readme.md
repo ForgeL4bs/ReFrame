@@ -41,6 +41,7 @@ A Python-based command-line tool to extract frames from video files (MP4, MKV, e
 
     ```bash
     git clone https://github.com/ForgeL4bs/ReFrame
+    cd ReFrame
     ```
 
 2.  **Create a virtual environment (recommended):**
