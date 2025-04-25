@@ -9,10 +9,10 @@ A Python-based command-line tool to extract frames from video files (MP4, MKV, e
 ## Table of Contents
 
 * [Features](#features)
-* [Installation](#installation)
 * [Requirements](#requirements)
-* [Usage](#usage)
+* [Installation](#installation)
 * [Arguments](#arguments)
+* [Usage](#usage)
 * [Examples](#examples)
 
 ## Features
