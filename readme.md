@@ -4,7 +4,7 @@
 [![OpenCV](https://img.shields.io/badge/OpenCV-4.0+-green.svg?logo=opencv&logoColor=white)](https://opencv.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A Python-based command-line tool to extract frames from video files (MP4, MKV, etc.) and save them as PNG or JPG images.  Handles videos of any length.
+A Python-based command-line tool to extract frames from video files (MP4, MKV, etc.) and save them as PNG or JPG images. Can handle videos of any length.
 
 ## Table of Contents
 
@@ -21,7 +21,7 @@ A Python-based command-line tool to extract frames from video files (MP4, MKV, e
 * **Format Support:** Supports outputting frames in both PNG and JPG formats.
 * **FPS Control:** Allows you to specify the frames per second (FPS) for extraction.  If not specified, extracts all frames.
 * **Command-Line Interface:** Easy-to-use command-line interface with clear arguments.
-* **Efficiency:** Processes videos efficiently using OpenCV.
+* **Efficiency:** Processes videos efficiently using openCV.
 * **Cross-Platform:** Works on Linux, macOS, and Windows.
 
 ## Requirements
