@@ -26,7 +26,6 @@ A Python-based command-line tool to extract frames from video files (MP4, MKV, e
 * **Format Support:** Supports outputting frames in both PNG and JPG formats.
 * **FPS Control:** Allows you to specify the frames per second (FPS) for extraction.  If not specified, extracts all frames.
 * **Command-Line Interface:** Easy-to-use command-line interface with clear arguments.
-* **Error Handling:** Robust error handling for invalid video paths, output directories, and file formats.
 * **Efficiency:** Processes videos efficiently using OpenCV.
 * **Cross-Platform:** Works on Linux, macOS, and Windows.
 
