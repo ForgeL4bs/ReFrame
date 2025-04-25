@@ -6,20 +6,9 @@
 
 A Python-based command-line tool to extract frames from video files (MP4, MKV, etc.) and save them as PNG or JPG images.  Handles videos of any length.
 
-## Features
-
-* **Frame Extraction:** Extracts frames from video files.
-* **Format Support:** Supports outputting frames in both PNG and JPG formats.
-* **FPS Control:** Allows you to specify the frames per second (FPS) for extraction.  If not specified, extracts all frames.
-* **Command-Line Interface:** Easy-to-use command-line interface with clear arguments.
-* **Error Handling:** Robust error handling for invalid video paths, output directories, and file formats.
-* **Efficiency:** Processes videos efficiently using OpenCV.
-* **Cross-Platform:** Works on Linux, macOS, and Windows.
-
 ## Table of Contents
 
 * [Features](#features)
-* [Table of Contents](#table-of-contents)
 * [Installation](#installation)
 * [Requirements](#requirements)
 * [Usage](#usage)
@@ -30,6 +19,21 @@ A Python-based command-line tool to extract frames from video files (MP4, MKV, e
 * [License](#license)
 * [Author](#author)
 * [Acknowledgments](#acknowledgments)
+
+## Features
+
+* **Frame Extraction:** Extracts frames from video files.
+* **Format Support:** Supports outputting frames in both PNG and JPG formats.
+* **FPS Control:** Allows you to specify the frames per second (FPS) for extraction.  If not specified, extracts all frames.
+* **Command-Line Interface:** Easy-to-use command-line interface with clear arguments.
+* **Error Handling:** Robust error handling for invalid video paths, output directories, and file formats.
+* **Efficiency:** Processes videos efficiently using OpenCV.
+* **Cross-Platform:** Works on Linux, macOS, and Windows.
+
+## Requirements
+
+* **Python:** 3.7 or higher.
+* **OpenCV:** 4.0 or higher (install with `pip install opencv-python`).
 
 ## Installation
 
@@ -54,10 +58,11 @@ A Python-based command-line tool to extract frames from video files (MP4, MKV, e
     pip install opencv-python
     ```
 
-## Requirements
-
-* **Python:** 3.7 or higher.
-* **OpenCV:** 4.0 or higher (install with `pip install opencv-python`).
+## Arguments
+* ```bash
+  video_path
+  ```
+  : The path to the video file you want to extract frames from. (**Required**)
 
 ## Usage
 
