@@ -1,4 +1,4 @@
-# Video Frame Extractor
+# ReFrame (**Video Frame Extractor**)
 
 [![Python](https://img.shields.io/badge/Python-3.7+-blue.svg?logo=python&logoColor=yellow)](https://www.python.org/)
 [![OpenCV](https://img.shields.io/badge/OpenCV-4.0+-green.svg?logo=opencv&logoColor=white)](https://opencv.org/)
@@ -59,10 +59,9 @@ A Python-based command-line tool to extract frames from video files (MP4, MKV, e
     ```
 
 ## Arguments
-* ```bash
+* `bash
   video_path
-  ```
-  : The path to the video file you want to extract frames from. (**Required**)
+  `: The path to the video file you want to extract frames from. (**Required**)
 
 ## Usage
 
