@@ -1,0 +1,114 @@
+import cv2  # opencv library for video
+import os 
+import argparse
+import math
+
+#extract frames from a video file
+def extract_frames(video_path, output_dir, format='png', fps=None):
+    """
+    Arguments:
+        video_path (str): The path to the video file.
+        output_dir (str): The directory where the frames will be saved.
+        format (str, optional): The image format for the extracted frames ('png' or 'jpg'). Defaults to 'png'.
+        fps (float, optional): The frames per second to extract. If None, extracts all frames.
+    """
+
+    #check video file exists or not
+    if not os.path.exists(video_path):
+        print(f"Error: Video file not found at {video_path}")
+        return
+
+    #check if the output directory exists - create it if it doesn't using os
+    if not os.path.exists(output_dir):
+        print(f"No output directory found so, creating one...")
+        os.makedirs(output_dir)
+        print(f"Created output directory: {output_dir}")
+
+    #check if the specified format is valid(png/jpg/jpeg) - png is default
+    if format.lower() not in ['png', 'jpg', 'jpeg']:
+        print(f"Error: Invalid format '{format}'.  Please choose 'png', 'jpg', or 'jpeg'.")
+        return
+
+    #opens the video file using opencv
+    try:
+        video_capture = cv2.VideoCapture(video_path)
+    except Exception as e:
+        print(f"Error: Could not open video file.  Details: {e}")
+        return
+
+    #getting the video's frames per second (FPS)
+    video_fps = video_capture.get(cv2.CAP_PROP_FPS)
+    if not video_fps or video_fps <= 0:
+        print("Warning: Could not determine video FPS.  Extracting frames based on frame count.")
+        video_fps = 30  #assume 30 FPS if unknown, to avoid division by zero :) .
+
+    #total number of frames
+    total_frames = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
+
+    #initializing frame counter and setting the frame step
+    frame_number = 0
+    frame_step = 1  #defauult: 1 i.e.(extract every frame)
+
+    if fps is not None:
+        if fps <= 0:
+            print("Error: FPS must be a positive number.")
+            video_capture.release()
+            return
+        frame_step = int(math.floor(video_fps / fps)) #calculating how many frames to skip
+        if frame_step < 1: #prevents division by 0 or negative values
+            frame_step = 1
+
+    print(f"Extracting frames from {video_path} with a frame step of {frame_step} to {output_dir} in {format.upper()} format.")
+
+    #loop through the video frames
+    while True:
+        #read the next frame from the video
+        success, frame = video_capture.read()
+
+        #if no more frames, break out of the loop
+        if not success:
+            break
+
+        #naming convention (processing frames according to the frame_step that is the number of the frame)
+        if frame_number % frame_step == 0:
+            #construct the output file name
+            if format.lower() == 'png':
+                output_file = os.path.join(output_dir, f"frame_{frame_number:06d}.png")
+                cv2.imwrite(output_file, frame)  #save the frame (note: format = png by default)
+            elif format.lower() in ['jpg', 'jpeg']:
+                output_file = os.path.join(output_dir, f"frame_{frame_number:06d}.jpg")
+                cv2.imwrite(output_file, frame, [int(cv2.IMWRITE_JPEG_QUALITY), 95]) #save as jpg
+            print(f"Extracted frame {frame_number}/{total_frames}", end='\r')
+
+        frame_number += 1
+
+    #release the video capture object to free some resources
+    video_capture.release()
+    print(f"\nFinished extracting frames.  Total frames extracted: {frame_number // frame_step}")
+
+
+
+def main():
+    #creating an argument parser
+    parser = argparse.ArgumentParser(description="Extract frames from a video file.")
+
+    #pass the required arguments: video path and output directory
+    parser.add_argument("video_path", help="Path to the video file")
+    parser.add_argument("output_dir", help="Directory to save the extracted frames")
+
+    #pass optional arguments: image format and fps
+    parser.add_argument("-f", "--format", default="png", choices=['png', 'jpg', 'jpeg'],
+                        help="Format of the output frames (png or jpg). Default is png.")
+    parser.add_argument("-fps", "--fps", type=float,
+                        help="Frames per second to extract. If not specified, extracts all frames.")
+
+    #parsing the command line arguments
+    args = parser.parse_args()
+
+    #call the extract_frames function with the parsed arguments
+    extract_frames(args.video_path, args.output_dir, args.format, args.fps)
+
+
+
+if __name__ == "__main__":
+    main()
