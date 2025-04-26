@@ -2,5 +2,6 @@
 .venv/
 output/
 *.mp4
+test.mp4
 *.pyc
 __pycache__/
