@@ -4,13 +4,15 @@ import argparse
 import math
 
 #extract frames from a video file
-def extract_frames(video_path, output_dir, format='png', fps=None):
+def extract_frames(video_path, output_dir, format='png', fps=None, start_time=None, end_time=None):
     """
     Arguments:
-        video_path (str): The path to the video file.
-        output_dir (str): The directory where the frames will be saved.
-        format (str, optional): The image format for the extracted frames ('png' or 'jpg'). Defaults to 'png'.
-        fps (float, optional): The frames per second to extract. If None, extracts all frames.
+        video_path (str): The path to the video file
+        output_dir (str): The directory where the frames will be saved
+        format (str, optional): The image format for the extracted frames ('png' or 'jpg'). Defaults to 'png'
+        fps (float, optional): The frames per second to extract. If None, extracts all frames
+        start_time (float, optional): The time (in seconds) from where you want to start the extraction
+        end_time (float, optional): The time (in seconds) till where you want to extract
     """
 
     #check video file exists or not
@@ -44,10 +46,37 @@ def extract_frames(video_path, output_dir, format='png', fps=None):
 
     #total number of frames
     total_frames = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
+    
+    #video duration
+    video_duration = total_frames/video_fps
 
     #initializing frame counter and setting the frame step
     frame_number = 0
     frame_step = 1  #defauult: 1 i.e.(extract every frame)
+    extracted_frames_count = 0
+    
+    #calculating start and end frames based on time
+    start_frame = 0
+    end_frame = total_frames
+    
+    if start_time is not None:
+        if start_time < 0:
+            print("Error: Start time cannot be negative. Setting start time to 0.")
+            start_time = 0
+        if start_time > video_duration:
+            print("Error: Start time cannot be greater than video duration. Setting start time to video duration...")
+            start_time = video_duration
+        start_frame = int(math.floor(start_time * video_fps))
+        frame_number = start_frame #start at the starting frame
+    
+    if end_time is not None:
+        if end_time < 0:
+            print("Error: End time cannot be negative. Setting end time to 0.")
+            end_time = 0
+        if end_time > video_duration:
+            print("Error: End time cannot be greater than video duration. Setting end time to video duration...")
+            end_time = video_duration
+        end_frame = int(math.floor(end_time * video_fps))
 
     if fps is not None:
         if fps <= 0:
@@ -59,6 +88,11 @@ def extract_frames(video_path, output_dir, format='png', fps=None):
             frame_step = 1
 
     print(f"Extracting frames from {video_path} with a frame step of {frame_step} to {output_dir} in {format.upper()} format.")
+    if start_time is not None or end_time is not None:
+        print(f"Extraction time range: {start_time if start_time is not None else 0}s - {end_time if end_time is not None else video_duration}s")
+        
+    #set the video to start from the start frame
+    video_capture.set(cv2.CAP_PROP_POS_FRAMES, start_frame)
 
     #loop through the video frames
     while True:
@@ -66,25 +100,26 @@ def extract_frames(video_path, output_dir, format='png', fps=None):
         success, frame = video_capture.read()
 
         #if no more frames, break out of the loop
-        if not success:
+        if not success or frame_number > end_frame:
             break
 
         #naming convention (processing frames according to the frame_step that is the number of the frame)
-        if frame_number % frame_step == 0:
+        if frame_number % frame_step == 0 and frame_number >= start_frame:
             #construct the output file name
             if format.lower() == 'png':
-                output_file = os.path.join(output_dir, f"frame_{frame_number:06d}.png")
+                output_file = os.path.join(output_dir, f"frame_{extracted_frames_count:06d}.png")
                 cv2.imwrite(output_file, frame)  #save the frame (note: format = png by default)
             elif format.lower() in ['jpg', 'jpeg']:
-                output_file = os.path.join(output_dir, f"frame_{frame_number:06d}.jpg")
+                output_file = os.path.join(output_dir, f"frame_{extracted_frames_count:06d}.jpg")
                 cv2.imwrite(output_file, frame, [int(cv2.IMWRITE_JPEG_QUALITY), 95]) #save as jpg
             print(f"Extracted frame {frame_number}/{total_frames}", end='\r')
+            extracted_frames_count += 1
 
         frame_number += 1
 
     #release the video capture object to free some resources
     video_capture.release()
-    print(f"\nFinished extracting frames.  Total frames extracted: {frame_number // frame_step}")
+    print(f"\nFinished extracting frames. Total frames extracted: {extracted_frames_count}")
 
 
 
@@ -101,12 +136,16 @@ def main():
                         help="Format of the output frames (png or jpg). Default is png.")
     parser.add_argument("-fps", "--fps", type=float,
                         help="Frames per second to extract. If not specified, extracts all frames.")
+    parser.add_argument("-start", "--start_time", type=float,
+                        help="Start time (in seconds) for frame extraction.")
+    parser.add_argument("-end", "--end_time", type=float,
+                        help="End time (in seconds) for frame extraction.")
 
     #parsing the command line arguments
     args = parser.parse_args()
 
     #call the extract_frames function with the parsed arguments
-    extract_frames(args.video_path, args.output_dir, args.format, args.fps)
+    extract_frames(args.video_path, args.output_dir, args.format, args.fps, args.start_time, args.end_time)
 
 
 

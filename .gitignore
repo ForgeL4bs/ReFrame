@@ -1,6 +1,6 @@
 .vscode/
 .venv/
 output/
-test.mp4
+*.mp4
 *.pyc
 __pycache__/
