@@ -14,6 +14,7 @@ A Python-based command-line tool to extract frames from video files (MP4, MKV, e
 * [Arguments](#arguments)
 * [Usage](#usage)
 * [Examples](#examples)
+* [ChangeHistory](#change-history)
 
 ## Features
 
@@ -85,4 +86,4 @@ python extract_frames.py video.mp4 output_frames -start 10 -end 25
 
 ### 26/04/25
 
--Added Support to specify a timeline from which you wanna extract frames. Works kind of like trimming the video(same same but different).
+* Added Support to specify a timeline from which you wanna extract frames. Works kind of like trimming the video(same same but different).
