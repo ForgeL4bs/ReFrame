@@ -18,6 +18,7 @@ A Python-based command-line tool to extract frames from video files (MP4, MKV, e
 ## Features
 
 * **Frame Extraction:** Extracts frames from video files.
+* **Specify Timelines** Extracts frames withing a specified timeline.
 * **Format Support:** Supports outputting frames in both PNG and JPG formats.
 * **FPS Control:** Allows you to specify the frames per second (FPS) for extraction.  If not specified, extracts all frames.
 * **Command-Line Interface:** Easy-to-use command-line interface with clear arguments.
@@ -56,12 +57,14 @@ A Python-based command-line tool to extract frames from video files (MP4, MKV, e
 * `video_path` (**Required**): The path to the video file you want to extract frames from.
 * `output_dir` (**Required**): The directory where you want to save the extracted frames.  This directory will be created if it doesn't exist. 
 * `-f, --format` (Optional): The format of the output frames. Can be either png or jpg. Default is png. 
+* `-start, --start_time`(Optional): Specifies the time (in seconds) from where you want to start the extraction.
+* `-end, --end_time` (Optional): Specifies the time (in seconds) till where you want to extract i.e. the end.
 * `-fps, --fps` (Optional): The number of frames per second to extract. If not specified, all frames will be extracted. (**Note: this is calculated based on the FPS of your input video so use it if you really want, for more clarity check out the code in extract_frames.py.**)
 
 ## Usage
 
 ```bash
-python extract_frames.py <video_path> <output_dir> [-f <format>] [-fps <frames_per_second>]
+python extract_frames.py <video_path> <output_dir> [-f <format>] [-fps <frames_per_second>] [-start <start_time_in_seconds>] [-end <end_time_in_seconds>]
 ```
 
 ## Examples
@@ -73,7 +76,13 @@ python extract_frames.py test.mp4 output_frames
 ```bash
 python extract_frames.py video.mkv frames -f jpg -fps 10
 ```
-* Extract frames from `movie.mp4` to the `images` directory as PNGs at 1 frame per second:
+* Extract frames within a time range:
 ```bash
-python extract_frames.py movie.mp4 images -fps 1
+python extract_frames.py video.mp4 output_frames -start 10 -end 25
 ```
+
+## Change History
+
+### 26/04/25
+
+-Added Support to specify a timeline from which you wanna extract frames. Works kind of like trimming the video(same same but different).
