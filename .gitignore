@@ -3,4 +3,8 @@
 output/
 *.mp4
 *.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
 __pycache__/
