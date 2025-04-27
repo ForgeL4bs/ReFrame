@@ -1,4 +1,4 @@
-# ReFrame-CLI
+<h1 align="center">ReFrame-CLI <img src="./assets/console.png" alt="Console Icon" width="25" style="vertical-align: middle;"></h1>
 
 [![Python](https://img.shields.io/badge/Python-3.7+-blue.svg?logo=python&logoColor=yellow)](https://www.python.org/)
 [![OpenCV](https://img.shields.io/badge/OpenCV-4.0+-green.svg?logo=opencv&logoColor=white)](https://opencv.org/)
@@ -78,17 +78,24 @@ pip install -e .
 ---
 
 ## Arguments
-* **In General(Required for all the features)**
+**In General(Required for all the features)**
+
 * `-input`: Input path to any directory or file from where you want to access the files
 * `-output`: Output path to save the output
-* **Frame Extraction(Optionals)**
+
+**Frame Extraction(Optionals)**
+
 * `-f`: To specify the output format(Default = png)
 * `-fps`: To specify the frames_per_second to extract, if not specified then all the frames will be extracted
 * `-start`:The time (in seconds) from where you want to start the extraction
 * `-end`: The time (in seconds) till where you want to extract
-* **Image Conversion(Required)**
+
+**Image Conversion(Required)**
+
 * `-f`: sets the output format (e.g., 'png', 'jpg', 'jpeg', 'webp', 'heic')
-* **GIF Creation(Optional)**
+
+**GIF Creation(Optional)**
+
 * `-d`: sets the duration of each frame in the GIF in milliseconds (default: 100ms)
 * Note: In case of GIF `-output` you would need to specify the output path along with the `.gif` extension for the output file `for ex: home/gour4v/output/test.gif`
 
