@@ -1,89 +1,144 @@
-# ReFrame (**Video Frame Extractor**)
+# ReFrame-CLI
 
 [![Python](https://img.shields.io/badge/Python-3.7+-blue.svg?logo=python&logoColor=yellow)](https://www.python.org/)
 [![OpenCV](https://img.shields.io/badge/OpenCV-4.0+-green.svg?logo=opencv&logoColor=white)](https://opencv.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A Python-based command-line tool to extract frames from video files (MP4, MKV, etc.) and save them as PNG or JPG images. Can handle videos of any length.
+ReFrame-CLI is a Python-based command-line tool to streamline your video and image manipulation tasks. Ideal for preparing image datasets for training machine learning models, including generative AI and diffusion models. Can handle videos of any length.
+
+---
 
 ## Table of Contents
 
 * [Features](#features)
 * [Requirements](#requirements)
 * [Installation](#installation)
-* [Arguments](#arguments)
 * [Usage](#usage)
+  - [Frame Extraction](#frame-extraction)
+  - [Image Conversion](#image-conversion)
+  - [GIF Creation](#gif-creation)
 * [Examples](#examples)
 * [Change History](#change-history)
+
+---
 
 ## Features
 
 * **Frame Extraction:** Extracts frames from video files.
 * **Specify Timelines** Extracts frames withing a specified timeline.
-* **Format Support:** Supports outputting frames in both PNG and JPG formats.
 * **FPS Control:** Allows you to specify the frames per second (FPS) for extraction.  If not specified, extracts all frames.
+* **Convert Images**: Convert images between multiple formats such as PNG, JPG/JPEG, WEBP, HEIF/HEIC.
+* **Bulk Support**: Convert images in bulk by just passing the input_path/dir rather than passing them one by one.
+* **GIF Creation**: An additional feature to create Animated GIFs just by stacking up multiple frames(images).
 * **Command-Line Interface:** Easy-to-use command-line interface with clear arguments.
-* **Efficiency:** Processes videos efficiently using openCV.
 * **Cross-Platform:** Works on Linux, macOS, and Windows.
+
+---
 
 ## Requirements
 
 * **Python:** 3.7 or higher.
-* **OpenCV:** 4.0 or higher (install with `pip install opencv-python`).
+* **Dependencies**:
+  - OpenCV (`opencv-python`)
+  - pillow
+  - imageio
+  - pillow-heif (for HEIC/HEIF support)
+
+---
 
 ## Installation
 
-1.  **Clone the repository:**
+### Install via pip(Recommended):
+**By far the easiest way to install and use reframe-cli**
+```bash
+pip install reframe-cli
+```
 
-    ```bash
-    git clone https://github.com/ForgeL4bs/ReFrame
-    cd ReFrame
-    ```
+### Install from the source(github repo)
 
-2.  **Create a virtual environment (recommended):**
+1.  **Clone the repository**
+```bash
+git clone https://github.com/ForgeL4bs/ReFrame
+cd ReFrame
+```
 
-    ```bash
-    python3 -m venv .venv
-    source .venv/bin/activate  # On Linux/macOS
-    .venv\Scripts\activate  # On Windows
-    ```
+2.  **Create a virtual environment(recommended)**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate  # On Linux/macOS
+.venv\Scripts\activate  # On Windows
+```
 
-3.  **Install the requirements:**
+3.  **Install the package in editable mode**
+```bash
+pip install -e .
+```
 
-    ```bash
-    pip install opencv-python
-    ```
-
-## Arguments
-* `video_path` (**Required**): The path to the video file you want to extract frames from.
-* `output_dir` (**Required**): The directory where you want to save the extracted frames.  This directory will be created if it doesn't exist. 
-* `-f, --format` (Optional): The format of the output frames. Can be either png or jpg. Default is png. 
-* `-start, --start_time`(Optional): Specifies the time (in seconds) from where you want to start the extraction.
-* `-end, --end_time` (Optional): Specifies the time (in seconds) till where you want to extract i.e. the end.
-* `-fps, --fps` (Optional): The number of frames per second to extract. If not specified, all frames will be extracted. (**Note: this is calculated based on the FPS of your input video so use it if you really want, for more clarity check out the code in extract_frames.py.**)
+---
 
 ## Usage
 
+**ReFrame-CLI provides three main functionalities: frame extraction, image conversion, and GIF creation. Use the reframe command to access these features.**
+
+* ### Frame Extraction (Extract frames from a video file).
 ```bash
-python extract_frames.py <video_path> <output_dir> [-f <format>] [-fps <frames_per_second>] [-start <start_time_in_seconds>] [-end <end_time_in_seconds>]
+reframe extractf -input <video_path> -output <output_dir> [-f <format>] [-fps <frames_per_second>] [-start <start_time>] [-end <end_time>]
+```
+
+* ### Convert image format (Convert images between multiple formats)
+```bash
+reframe convert -input <input_path> -output <output_dir> -f <format>
+```
+
+* ### GIF Creation (Create animated gifs from images)
+```bash
+reframe gifc -input <input_dir> -output <output_path> [-d <duration>]
 ```
 
 ## Examples
+1. ### Frame Extraction
 * Extract all frames from `test.mp4` to the `output_frames` directory as PNGs:
 ```bash
-python extract_frames.py test.mp4 output_frames
+reframe extractf -input test.mp4 -output output_frames
 ```
 * Extract frames from `video.mkv` to the `frames` directory as JPGs at 10 frames per second:
 ```bash
-python extract_frames.py video.mkv frames -f jpg -fps 10
+reframe extractf -input video.mkv -output frames -f jpg -fps 10
 ```
 * Extract frames within a time range:
 ```bash
-python extract_frames.py video.mp4 output_frames -start 10 -end 25
+reframe extractf -input video.mp4 -output output_frames -start 10 -end 25
+```
+
+2. ### Image Conversion
+* Convert all images in `input_images` to PNG format and save them in `converted_images`:
+```bash
+reframe convert -input input_images -output converted_images -f png
+```
+* Convert a single HEIC image to JPG:
+```bash
+reframe convert -input image.heic -output converted_images -f jpg
+```
+
+3. ### GIF Creation
+* Create a GIF from images in the `frames` directory:
+```bash
+reframe gifc -input frames -output animation.gif
+```
+* Create a GIF with a custom frame duration (200ms per frame):
+```bash
+reframe gifc -input frames -output animation.gif -d 200
 ```
 
 ## Change History
 
-### 26/04/25
+### April 27, 2025
+
+* Initial release of ReFrame-CLI.
+* Added image conversion support for PNG, JPG, WEBP, HEIC, and HEIF formats.
+* Added GIF creation functionality.
+* Built and deployed to pypi
+
+### April 26, 2025
 
 * Added Support to specify a timeline from which you wanna extract frames. Works kind of like trimming the video(same same but different).
