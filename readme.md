@@ -95,6 +95,8 @@ reframe convert -input <input_path> -output <output_dir> -f <format>
 reframe gifc -input <input_dir> -output <output_path> [-d <duration>]
 ```
 
+---
+
 ## Examples
 1. ### Frame Extraction
 * Extract all frames from `test.mp4` to the `output_frames` directory as PNGs:
@@ -129,6 +131,8 @@ reframe gifc -input frames -output animation.gif
 ```bash
 reframe gifc -input frames -output animation.gif -d 200
 ```
+
+---
 
 ## Change History
 
