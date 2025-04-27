@@ -80,17 +80,17 @@ pip install -e .
 
 **ReFrame-CLI provides three main functionalities: frame extraction, image conversion, and GIF creation. Use the reframe command to access these features.**
 
-* ### Frame Extraction **(Extract frames from a video file)**
+* ### Frame Extraction ###**(Extract frames from a video file)**
 ```bash
 reframe extractf -input <video_path> -output <output_dir> [-f <format>] [-fps <frames_per_second>] [-start <start_time>] [-end <end_time>]
 ```
 
-* ### Convert image format **(Convert images between multiple formats)**
+* ### Convert image format ###**(Convert images between multiple formats)**
 ```bash
 reframe convert -input <input_path> -output <output_dir> -f <format>
 ```
 
-* ### GIF Creation **(Create animated gifs from images)**
+* ### GIF Creation ###**(Create animated gifs from images)**
 ```bash
 reframe gifc -input <input_dir> -output <output_path> [-d <duration>]
 ```
