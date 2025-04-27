@@ -14,6 +14,7 @@ ReFrame-CLI is a Python-based command-line tool to streamline your video and ima
 * [Requirements](#requirements)
 * [Installation](#installation)
 * [Usage](#usage)
+* [Arguments](#arguments)
   - [Frame Extraction](#frame-extraction)
   - [Image Conversion](#image-conversion)
   - [GIF Creation](#gif-creation)
@@ -73,6 +74,23 @@ source .venv/bin/activate  # On Linux/macOS
 ```bash
 pip install -e .
 ```
+
+---
+
+## Arguments
+* **In General(Required for all the features)**
+* `-input`: Input path to any directory or file from where you want to access the files
+* `-output`: Output path to save the output
+* **Frame Extraction(Optionals)**
+* `-f`: To specify the output format(Default = png)
+* `-fps`: To specify the frames_per_second to extract, if not specified then all the frames will be extracted
+* `-start`:The time (in seconds) from where you want to start the extraction
+* `-end`: The time (in seconds) till where you want to extract
+* **Image Conversion(Required)**
+* `-f`: sets the output format (e.g., 'png', 'jpg', 'jpeg', 'webp', 'heic')
+* **GIF Creation(Optional)**
+* `-d`: sets the duration of each frame in the GIF in milliseconds (default: 100ms)
+* Note: In case of GIF `-output` you would need to specify the output path along with the `.gif` extension for the output file `for ex: home/gour4v/output/test.gif`
 
 ---
 
