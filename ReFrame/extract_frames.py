@@ -2,6 +2,7 @@ import cv2  # opencv library for video
 import os 
 import argparse
 import math
+from ReFrame.utils import create_output_dir
 
 #extract frames from a video file
 def extract_frames(video_path, output_dir, format='png', fps=None, start_time=None, end_time=None):
@@ -15,16 +16,14 @@ def extract_frames(video_path, output_dir, format='png', fps=None, start_time=No
         end_time (float, optional): The time (in seconds) till where you want to extract
     """
 
-    #check video file exists or not
+    #check if the video file exists or not
     if not os.path.exists(video_path):
         print(f"Error: Video file not found at {video_path}")
         return
 
     #check if the output directory exists - create it if it doesn't using os
-    if not os.path.exists(output_dir):
-        print(f"No output directory found so, creating one...")
-        os.makedirs(output_dir)
-        print(f"Created output directory: {output_dir}")
+    if not create_output_dir(output_dir):
+        return
 
     #check if the specified format is valid(png/jpg/jpeg) - png is default
     if format.lower() not in ['png', 'jpg', 'jpeg']:
