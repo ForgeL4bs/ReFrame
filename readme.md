@@ -1,4 +1,4 @@
-# ReFrame-CLI ![Console Icon](./assets/console_resized.png)
+<h1 align="center">ReFrame-CLI</h1>
 
 [![Python](https://img.shields.io/badge/Python-3.7+-blue.svg?logo=python&logoColor=yellow)](https://www.python.org/)
 [![OpenCV](https://img.shields.io/badge/OpenCV-4.0+-green.svg?logo=opencv&logoColor=white)](https://opencv.org/)
