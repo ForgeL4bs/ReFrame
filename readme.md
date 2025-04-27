@@ -1,4 +1,4 @@
-<h1 align="center">ReFrame-CLI <img src="./assets/console.png" alt="Console Icon" width="30" style="vertical-align: middle;"></h1>
+<h1 align="center">ReFrame-CLI <img src="./assets/console.png" alt="Console Icon" width="40" style="position: relative; top: 7px;"></h1>
 
 [![Python](https://img.shields.io/badge/Python-3.7+-blue.svg?logo=python&logoColor=yellow)](https://www.python.org/)
 [![OpenCV](https://img.shields.io/badge/OpenCV-4.0+-green.svg?logo=opencv&logoColor=white)](https://opencv.org/)
@@ -169,7 +169,7 @@ reframe gifc -input frames -output animation.gif -d 200
 * Initial release of ReFrame-CLI.
 * Added image conversion support for PNG, JPG, WEBP, HEIC, and HEIF formats.
 * Added GIF creation functionality.
-* Built and deployed to pypi
+* Built and deployed to [pypi](https://pypi.org/project/reframe-cli/)
 
 ### April 26, 2025
 
