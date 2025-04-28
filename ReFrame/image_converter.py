@@ -78,8 +78,6 @@ def process_file(image_file, output_dir, output_format, is_bulk=False):
         replace_original = True
     else:
         if not create_output_dir(output_dir):
-            if is_bulk:
-                sys.exit(1)
             return
         output_file = os.path.join(output_dir, os.path.splitext(os.path.basename(image_file))[0] + "." + output_format.lower())
 
