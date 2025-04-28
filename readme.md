@@ -4,7 +4,7 @@
 [![OpenCV](https://img.shields.io/badge/OpenCV-4.0+-green.svg?logo=opencv&logoColor=white)](https://opencv.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-ReFrame-CLI is a Python-based command-line tool to streamline your video and image manipulation tasks. Ideal for preparing image datasets for training machine learning models, including generative AI and diffusion models. Can handle videos of any length.
+ReFrame-CLI is a Python-based command-line `ImageToolKit` to streamline your image manipulation tasks. Ideal for preparing image datasets for training machine learning models, including generative AI and diffusion models. Can handle videos of any length.
 
 ---
 
@@ -15,9 +15,10 @@ ReFrame-CLI is a Python-based command-line tool to streamline your video and ima
 * [Installation](#installation)
 * [Usage](#usage)
 * [Arguments](#arguments)
-  - [Frame Extraction](#frame-extraction)
-  - [Image Conversion](#image-conversion)
-  - [GIF Creation](#gif-creation)
+  - Frame Extraction
+  - Image Conversion
+  - Resize Image
+  - GIF Creation
 * [Examples](#examples)
 * [Change History](#change-history)
 
@@ -29,7 +30,8 @@ ReFrame-CLI is a Python-based command-line tool to streamline your video and ima
 * **Specify Timelines** Extracts frames withing a specified timeline.
 * **FPS Control:** Allows you to specify the frames per second (FPS) for extraction.  If not specified, extracts all frames.
 * **Convert Images**: Convert images between multiple formats such as PNG, JPG/JPEG, WEBP, HEIF/HEIC.
-* **Bulk Support**: Convert images in bulk by just passing the input_path/dir rather than passing them one by one.
+* **Resize Images**: Resize images to desired size/ratio or use the multiplier to just upscale the size of the image.
+* **Bulk Support**: Convert/Resize images in bulk by just passing the input_path/dir rather than passing them one by one.
 * **GIF Creation**: An additional feature to create Animated GIFs just by stacking up multiple frames(images).
 * **Command-Line Interface:** Easy-to-use command-line interface with clear arguments.
 * **Cross-Platform:** Works on Linux, macOS, and Windows.
@@ -94,6 +96,19 @@ pip install -e .
 
 * `-f`: sets the output format (e.g., 'png', 'jpg', 'jpeg', 'webp', 'heic')
 
+**Resize Image(Required)**
+
+* `-wh`: The width of the resized image
+* `-ht`: The height of the resized image
+* `-ratio`:The desired aspect ratio (e.g., 1:1, 3:4).
+* Note: If you use `-wh` and `-ht` then you don't need to specify `-ratio` and vise versa, since both are for specifying dimension only(just use any one between) and yeah it goes same for `-multi` multiplier, cause it just multiplies your height width by the number you have specified, or you can say upscaled dimensions by `-multi`.
+
+**Resize Image(Optionals)**
+
+* `-f`: Is to specify format of the output image [choices are: png, jpg], if you need any other format, you can just convert it using the `convert` feature.
+* `-fp`: The focal point for resizing ('left', 'right', 'top', 'bottom', 'center', 'auto'). Defaults to 'auto', which behaves like 'center'.
+* `-multi`: The resizing multiplier (e.g., 2 for 2x). Overrides width, height, and ratio.
+
 **GIF Creation(Optional)**
 
 * `-d`: sets the duration of each frame in the GIF in milliseconds (default: 100ms)
@@ -115,6 +130,11 @@ reframe extractf -input <video_path> -output <output_dir> [-f <format>] [-fps <f
 **(Convert images between multiple formats)**
 ```bash
 reframe convert -input <input_path> -output <output_dir> -f <format>
+```
+
+* ### Resize Image
+```bash
+reframe resize -input <input_path> -output <output_dir> [-wh <width>] [-ht <height>] [-ratio <aspect_ratio>] [-multi <multiplier>] [-f <format>] [-fp <focal_point>]
 ```
 
 * ### GIF Creation
@@ -150,7 +170,18 @@ reframe convert -input input_images -output converted_images -f png
 reframe convert -input image.heic -output converted_images -f jpg
 ```
 
-3. ### GIF Creation
+3. ### Resize Images
+
+* Resize all images in the `input_images` directory to 800x600 and save them in the `resized_images` directory:
+```bash
+reframe resize -input input_images -output resized_images -wh 800 -ht 600
+```
+* Resize all images in the `input_images` directory to a `3:4` aspect ratio along with `focal_point` left and save them in the `resized_images` directory:
+```bash
+reframe resize -input input_images -output resized_images -ratio 3:4 -fp left
+```
+
+4. ### GIF Creation
 * Create a GIF from images in the `frames` directory:
 ```bash
 reframe gifc -input frames -output animation.gif
@@ -163,6 +194,11 @@ reframe gifc -input frames -output animation.gif -d 200
 ---
 
 ## Change History
+
+### April 29, 2025
+
+* Added a new feature ~ **Image Resizer**.
+* Fixed some bugs inside Image converter.
 
 ### April 27, 2025
 
