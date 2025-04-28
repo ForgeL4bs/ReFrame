@@ -197,6 +197,7 @@ reframe gifc -input frames -output animation.gif -d 200
 
 ### April 29, 2025
 
+* Latest release of ReFrame-CLI-1.1.0 on [pypi](https://pypi.org/project/reframe-cli/)
 * Added a new feature ~ **Image Resizer**.
 * Fixed some bugs inside Image converter.
 
