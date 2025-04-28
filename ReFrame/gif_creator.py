@@ -4,13 +4,13 @@ import imageio #for creating the GIF
 import argparse
 from ReFrame.utils import create_output_dir
 
-def create_gif(image_dir, output_path, duration=100):
+def create_gif(image_path, output_dir, duration=100):
     """
     creates an animated GIF by stacking up images.
 
     Arguments:
-        image_dir (str): Path to the directory containing the images.
-        output_path (str): Path + the file extension to save the output GIF file. (ex. home/xyz/trial/test1.gif)
+        image_path (str): Path to the directory containing the images.
+        output_dir (str): Path + the file extension to save the output GIF file. (ex. home/xyz/trial/test1.gif)
         duration (int, optional): Duration of each frame in the GIF in milliseconds. Defaults to 100ms.
     """
     
@@ -20,27 +20,27 @@ def create_gif(image_dir, output_path, duration=100):
         return
     
     #verify output path
-    if not output_path.lower().endswith('.gif'):
+    if not output_dir.lower().endswith('.gif'):
         print("Error: Output path must have a .gif extension.")
         return
     
     #verify the image directory exists or not
-    if not os.path.exists(image_dir):
-        print(f"Error: Image directory not found at {image_dir}")
+    if not os.path.exists(image_path):
+        print(f"Error: Image directory not found at {image_path}")
         return
 
    #create the output directory if it doesn't exist
-    output_dir = os.path.dirname(output_path)
+    output_dir = os.path.dirname(output_dir)
     if output_dir:
         if not create_output_dir(output_dir):
             print(f"Error: Could not create output directory: {output_dir}")
             return
 
     #get images
-    image_files = sorted([os.path.join(image_dir, f) for f in os.listdir(image_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg'))])
+    image_files = sorted([os.path.join(image_path, f) for f in os.listdir(image_path) if f.lower().endswith(('.png', '.jpg', '.jpeg'))])
 
     if not image_files:
-        print(f"Error: No PNG or JPG images found in {image_dir}")
+        print(f"Error: No PNG or JPG images found in {image_path}")
         return
 
     #read the images using opencv
@@ -67,8 +67,8 @@ def create_gif(image_dir, output_path, duration=100):
     
     #create the GIF (using imageio)
     try:
-        imageio.mimsave(output_path, images, duration=duration / 1000.0)  #converting ms to seconds
-        print(f"Created animated GIF: {output_path}")
+        imageio.mimsave(output_dir, images, duration=duration / 1000.0)  #converting ms to seconds
+        print(f"Created animated GIF: {output_dir}")
     except Exception as e:
         print(f"Error creating GIF: {e}")
         return
@@ -78,13 +78,13 @@ def main():
     Main function to parse command line arguments and call the create_gif function.
     """
     parser = argparse.ArgumentParser(description="Create an animated GIF from a directory of images.")
-    parser.add_argument("image_dir", help="Path to the directory containing the images.")
-    parser.add_argument("output_path", help="Path to save the output GIF file (e.g., output.gif).")
+    parser.add_argument("image_path", help="Path to the directory containing the images.")
+    parser.add_argument("output_dir", help="Path to save the output GIF file (e.g., output.gif).")
     parser.add_argument("-d", "--duration", type=int, default=100,
                         help="Duration of each frame in the GIF in milliseconds (default: 100).")
 
     args = parser.parse_args()
-    create_gif(args.image_dir, args.output_path, args.duration)
+    create_gif(args.image_path, args.output_dir, args.duration)
 
 if __name__ == "__main__":
     main()
