@@ -29,13 +29,10 @@ Reframe is still in development and we know it needs a lot of improvements, So c
 ## Features
 
 * **Frame Extraction:** Extracts frames from video files.
-* **Specify Timelines** Extracts frames withing a specified timeline.
-* **FPS Control:** Allows you to specify the frames per second (FPS) for extraction.  If not specified, extracts all frames.
 * **Convert Images**: Convert images between multiple formats such as PNG, JPG/JPEG, WEBP, HEIF/HEIC.
 * **Resize Images**: Resize images to desired size/ratio or use the multiplier to just upscale the size of the image.
 * **Bulk Support**: Convert/Resize images in bulk by just passing the input_path/dir rather than passing them one by one.
 * **GIF Creation**: An additional feature to create Animated GIFs just by stacking up multiple frames(images).
-* **Command-Line Interface:** Easy-to-use command-line interface with clear arguments.
 * **Cross-Platform:** Works on Linux, macOS, and Windows.
 
 ---
@@ -196,6 +193,11 @@ reframe gifc -input frames -output animation.gif -d 200
 ---
 
 ## Change History
+
+### April 29, 2025
+
+* Release: v1.1.1
+* Added a better progress bar using tqdm
 
 ### April 29, 2025
 
