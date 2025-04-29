@@ -3,6 +3,7 @@ import os
 import argparse
 import numpy as np  #import numpy as np for array operations
 from PIL import Image #import Image from pillow library
+from tqdm import tqdm
 import sys
 from ReFrame.utils import create_output_dir
 
@@ -141,17 +142,22 @@ def process_directory(image_dir, output_dir, output_format):
             return
         
     #get a list of files from the directory
-    files = os.listdir(image_dir)
+    files = [file for file in os.listdir(image_dir) if file.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.heic', '.heif'))]
     total_files = len(files)
-    converted_count = 0
-    for i, file in enumerate(files):
-        file_path = os.path.join(image_dir, file)
-        if os.path.isfile(file_path) and file.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.heic', '.heif')):
-            process_file(file_path, output_dir, output_format, is_bulk=True)
-            converted_count += 1
-            sys.stdout.write(f"\rConverted {converted_count}/{total_files}")
-            sys.stdout.flush()
-    print(f"\nFinished converting {converted_count} images.")
+    
+    if total_files == 0:
+        print("No valid image files found in the directory.")
+        return
+    
+    #tqdm for progress bar
+    with tqdm(total=total_files, desc="Converting images", unit="image") as pbar:
+        for file in files:
+            file_path = os.path.join(image_dir, file)
+            if os.path.isfile(file_path):
+                process_file(file_path, output_dir, output_format, is_bulk=True)
+                pbar.update(1) #updating the bar
+                
+    print(f"\nFinished converting {total_files} images.")
 
 def main():
     """

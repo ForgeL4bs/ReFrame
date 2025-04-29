@@ -2,6 +2,7 @@ import cv2  # opencv library for video
 import os 
 import argparse
 import math
+from tqdm import tqdm
 from ReFrame.utils import create_output_dir
 
 #extract frames from a video file
@@ -92,29 +93,33 @@ def extract_frames(video_path, output_dir, format='png', fps=None, start_time=No
         
     #set the video to start from the start frame
     video_capture.set(cv2.CAP_PROP_POS_FRAMES, start_frame)
+    
+    #tqdm progress bar(initialization of the bar)
+    total_frames_to_extract = (end_frame - start_frame) // frame_step + 1
+    with tqdm(total=total_frames_to_extract, desc="Extracting frames", unit="frame") as pbar:
+        #loop through the video frames
+        while True:
+            #read the next frame from the video
+            success, frame = video_capture.read()
 
-    #loop through the video frames
-    while True:
-        #read the next frame from the video
-        success, frame = video_capture.read()
+            #if no more frames, break out of the loop
+            if not success or frame_number > end_frame:
+                break
 
-        #if no more frames, break out of the loop
-        if not success or frame_number > end_frame:
-            break
+            #naming convention (processing frames according to the frame_step that is the number of the frame)
+            if frame_number % frame_step == 0 and frame_number >= start_frame:
+                #construct the output file name
+                if format.lower() == 'png':
+                    output_file = os.path.join(output_dir, f"frame_{extracted_frames_count:06d}.png")
+                    cv2.imwrite(output_file, frame)  #save the frame (note: format = png by default)
+                elif format.lower() in ['jpg', 'jpeg']:
+                    output_file = os.path.join(output_dir, f"frame_{extracted_frames_count:06d}.jpg")
+                    cv2.imwrite(output_file, frame, [int(cv2.IMWRITE_JPEG_QUALITY), 95]) #save as jpg
+                extracted_frames_count += 1
+                #updating the progress bar
+                pbar.update(1)
 
-        #naming convention (processing frames according to the frame_step that is the number of the frame)
-        if frame_number % frame_step == 0 and frame_number >= start_frame:
-            #construct the output file name
-            if format.lower() == 'png':
-                output_file = os.path.join(output_dir, f"frame_{extracted_frames_count:06d}.png")
-                cv2.imwrite(output_file, frame)  #save the frame (note: format = png by default)
-            elif format.lower() in ['jpg', 'jpeg']:
-                output_file = os.path.join(output_dir, f"frame_{extracted_frames_count:06d}.jpg")
-                cv2.imwrite(output_file, frame, [int(cv2.IMWRITE_JPEG_QUALITY), 95]) #save as jpg
-            print(f"Extracted frame {frame_number}/{total_frames}", end='\r')
-            extracted_frames_count += 1
-
-        frame_number += 1
+            frame_number += 1
 
     #release the video capture object to free some resources
     video_capture.release()

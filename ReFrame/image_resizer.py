@@ -1,8 +1,8 @@
 import cv2
 import os
 import argparse
-from PIL import Image
 import sys
+from tqdm import tqdm
 from ReFrame.utils import create_output_dir
 
 def resize_image_files(image_path, output_dir, output_format, width=None, height=None, ratio=None, focal_point=None, multiplier=None):
@@ -167,7 +167,12 @@ def process_directory(image_dir, output_dir, output_format, width, height, ratio
             return
 
     #get files
-    files = os.listdir(image_dir)
+    files = [file for file in os.listdir(image_dir) if file.lower().endswith(('.png', '.jpg', '.jpeg'))]
+    total_files = len(files)
+    
+    if total_files == 0:
+        print("No valid image files found in the directory.")
+        return
     
     #handle unsupported files
     unsupported_files = [file for file in files if file.lower().endswith(('.heif', '.heic'))]
@@ -176,18 +181,15 @@ def process_directory(image_dir, output_dir, output_format, width, height, ratio
         print("Please use the 'convert' feature to convert these files to 'png', 'jpg', or 'jpeg' first.")
         return
     
-    #process valid files
-    total_files = len(files)
-    converted_count = 0
-    
-    for i, file in enumerate(files):
-        file_path = os.path.join(image_dir, file)
-        if os.path.isfile(file_path) and file.lower().endswith(('.png', '.jpg', '.jpeg')):
-            process_file(file_path, output_dir, output_format, width, height, ratio, focal_point, multiplier, is_bulk=True)
-            converted_count += 1
-            sys.stdout.write(f"\rProcessed {converted_count}/{total_files}")
-            sys.stdout.flush()
-    print(f"\nFinished resizing {converted_count} images.")
+    #progress bar
+    with tqdm(total=total_files, desc="Resizing images", unit="image") as pbar:
+        for file in files:
+            file_path = os.path.join(image_dir, file)
+            if os.path.isfile(file_path):
+                process_file(file_path, output_dir, output_format, width, height, ratio, focal_point, multiplier, is_bulk=True)
+                pbar.update(1) #update bar
+
+    print(f"\nFinished resizing {total_files} images.")
 
 
 

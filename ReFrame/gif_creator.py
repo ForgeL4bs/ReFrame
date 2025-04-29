@@ -2,6 +2,7 @@ import cv2
 import os 
 import imageio #for creating the GIF
 import argparse
+from tqdm import tqdm
 from ReFrame.utils import create_output_dir
 
 def create_gif(image_path, output_dir, duration=100):
@@ -46,20 +47,22 @@ def create_gif(image_path, output_dir, duration=100):
     #read the images using opencv
     images = []
     total_files = len(image_files)
-    for i, image_file in enumerate(image_files):
-        try:
-            img = cv2.imread(image_file)
-            if img is None:
-                print(f"Warning: Could not read image {image_file}. Skipping.")
-                continue
-            #convert from BGR to RGB for imageio to process
-            img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            images.append(img_rgb)
-            print(f"\rProcessing {i + 1}/{total_files} images...", end="")
-        except Exception as e:
-            print(f"Error reading image {image_file}: {e}")
-            return
-    print()
+    
+    #progress bar
+    with tqdm(total=total_files, desc="Processing images", unit="image") as pbar:
+        for image_file in image_files:
+            try:
+                img = cv2.imread(image_file)
+                if img is None:
+                    print(f"Warning: Could not read image {image_file}. Skipping.")
+                    continue
+                #convert from BGR to RGB for imageio to process
+                img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                images.append(img_rgb)
+                pbar.update(1) #update progress bar
+            except Exception as e:
+                print(f"Error reading image {image_file}: {e}")
+                return
     
     if not images:
         print("Error: No valid images to create a GIF.")
