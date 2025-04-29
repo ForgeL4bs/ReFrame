@@ -198,6 +198,7 @@ reframe gifc -input frames -output animation.gif -d 200
 
 * Release: v1.1.1
 * Added a better progress bar using tqdm
+* Removed PIL from image_resizer.py
 
 ### April 29, 2025
 
