@@ -3,13 +3,12 @@ import os
 
 setup(
     name="reframe-cli",
-    version="1.1.0",
+    version="1.1.1",
     description="ReFrame-CLI is a Python-based command-line tool to streamline your video and image manipulation tasks. Ideal for preparing image datasets for training machine learning models, including generative AI and diffusion models. Can handle videos of any length.",
     long_description=open("readme.md").read() if os.path.exists("readme.md") else "",
     long_description_content_type="text/markdown",
     author="Gour4v",
     author_email="chatgai.note@gmail.com",
-    url="https://github.com/ForgeL4bs/ReFrame",
     license="MIT",
     packages=find_packages(include=["ReFrame", "ReFrame.*"]),
     install_requires=[
@@ -17,6 +16,7 @@ setup(
         "pillow",
         "imageio",
         "pillow-heif",
+        "tqdm",
     ],
     entry_points={
         "console_scripts": [
