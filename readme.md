@@ -1,4 +1,8 @@
-<h1 align="center">ReFrame-CLI</h1>
+<p align=”center”>
+
+<img src="assets/Frame 2.png" alt="my banner">
+
+</p>
 
 [![Python](https://img.shields.io/badge/Python-3.7+-blue.svg?logo=python&logoColor=yellow)](https://www.python.org/)
 [![OpenCV](https://img.shields.io/badge/OpenCV-4.0+-green.svg?logo=opencv&logoColor=white)](https://opencv.org/)
