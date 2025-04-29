@@ -6,6 +6,8 @@
 
 ReFrame-CLI is a Python-based command-line `ImageToolKit` to streamline your image manipulation tasks. Ideal for preparing image datasets for training machine learning models, including generative AI and diffusion models. Can handle videos of any length.
 
+Reframe is still in development and we know it needs a lot of improvements, So communities contributions are really appreciated🙇.
+
 ---
 
 ## Table of Contents
