@@ -3,3 +3,5 @@ pillow
 imageio
 pillow-heif
 tqdm
+rembg
+onnxruntime
