@@ -1,6 +1,6 @@
 <p align=”center”>
 
-<img src="assets/Frame 2.png" alt="my banner">
+<img src="https://raw.githubusercontent.com/ForgeL4bs/ReFrame/main/assets/Frame%202.png" alt="my banner">
 
 </p>
 
@@ -24,6 +24,7 @@ Reframe is still in development and we know it needs a lot of improvements, So c
   - Frame Extraction
   - Image Conversion
   - Resize Image
+  - Background Remover
   - GIF Creation
 * [Examples](#examples)
 * [Change History](#change-history)
@@ -35,6 +36,7 @@ Reframe is still in development and we know it needs a lot of improvements, So c
 * **Frame Extraction:** Extracts frames from video files.
 * **Convert Images**: Convert images between multiple formats such as PNG, JPG/JPEG, WEBP, HEIF/HEIC.
 * **Resize Images**: Resize images to desired size/ratio or use the multiplier to just upscale the size of the image.
+* **Background Remover**: Remove background from an image and optionally replace it with a specified color.
 * **Bulk Support**: Convert/Resize images in bulk by just passing the input_path/dir rather than passing them one by one.
 * **GIF Creation**: An additional feature to create Animated GIFs just by stacking up multiple frames(images).
 * **Cross-Platform:** Works on Linux, macOS, and Windows.
@@ -45,10 +47,7 @@ Reframe is still in development and we know it needs a lot of improvements, So c
 
 * **Python:** 3.7 or higher.
 * **Dependencies**:
-  - OpenCV (`opencv-python`)
-  - pillow
-  - imageio
-  - pillow-heif (for HEIC/HEIF support)
+  - Check out requirements.txt
 
 ---
 
@@ -112,6 +111,10 @@ pip install -e .
 * `-fp`: The focal point for resizing ('left', 'right', 'top', 'bottom', 'center', 'auto'). Defaults to 'auto', which behaves like 'center'.
 * `-multi`: The resizing multiplier (e.g., 2 for 2x). Overrides width, height, and ratio.
 
+**Background Remover(Optionals)**
+
+* `-color`: RGB color to replace the background. If None, the background will be transparent.
+
 **GIF Creation(Optional)**
 
 * `-d`: sets the duration of each frame in the GIF in milliseconds (default: 100ms)
@@ -138,6 +141,11 @@ reframe convert -input <input_path> -output <output_dir> -f <format>
 * ### Resize Image
 ```bash
 reframe resize -input <input_path> -output <output_dir> [-wh <width>] [-ht <height>] [-ratio <aspect_ratio>] [-multi <multiplier>] [-f <format>] [-fp <focal_point>]
+```
+
+* ### Background Remover
+```bash
+reframe bgremove -input <input_path> -output <output_dir> -color 255,255,255(for white)
 ```
 
 * ### GIF Creation
@@ -184,7 +192,19 @@ reframe resize -input input_images -output resized_images -wh 800 -ht 600
 reframe resize -input input_images -output resized_images -ratio 3:4 -fp left
 ```
 
-4. ### GIF Creation
+4. ### Background Remover
+
+* Remove Background for a Directory
+```bash
+reframe bgremove -input ./images -output ./bg_removed
+```
+
+* Remove Background and Replace with a slight reddish color
+```bash
+reframe bgremove -input ./images -output ./bg_removed -color 199,74,74
+```
+
+5. ### GIF Creation
 * Create a GIF from images in the `frames` directory:
 ```bash
 reframe gifc -input frames -output animation.gif
@@ -197,6 +217,12 @@ reframe gifc -input frames -output animation.gif -d 200
 ---
 
 ## Change History
+
+### April 30, 2025
+
+* Release: v1.2.0
+* Newly added feature: **Background Remover**
+* Using `rembg` and `onnxruntime` to remove the background from an image.
 
 ### April 29, 2025
 
